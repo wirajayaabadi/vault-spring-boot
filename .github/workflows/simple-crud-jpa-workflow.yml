@@ -1,0 +1,39 @@
+name: Simple CRUD with JPA workflow
+
+on:
+  push:
+    paths:
+      - 'simple-crud-jpa/**'
+  pull_request:
+    paths:
+      - 'simple-crud-jpa/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: simple-crud-jpa
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      - name: Build and Test
+        run: mvn clean install
+
+      - name: Package
+        run: mvn package -DskipTests
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: simple-crud-jpa-jar
+          path: simple-crud-jpa/target/*.jar
