@@ -34,6 +34,9 @@
 		<lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
 		<h2.version>2.3.232</h2.version>
 		<spring-boot.version>3.5.3</spring-boot.version>
+		<ojdbc.version>3.5.3</ojdbc.version>
+		<postgresql.version>42.7.3</postgresql.version>
+		<maven-compiler.version>3.11.0</maven-compiler.version>
 	</properties>
 
 	<dependencies>
@@ -91,6 +94,12 @@
 			<version>${lombok.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>${postgresql.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -98,11 +107,12 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${spring-boot.version}</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.11.0</version>
+				<version>${maven-compiler.version}</version>
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
