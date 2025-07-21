@@ -37,6 +37,7 @@
 		<ojdbc.version>3.5.3</ojdbc.version>
 		<postgresql.version>42.7.3</postgresql.version>
 		<maven-compiler.version>3.11.0</maven-compiler.version>
+		<jjwt-version>0.11.5</jjwt-version>
 	</properties>
 
 	<dependencies>
@@ -61,6 +62,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 			<version>${spring-boot.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 
 		<dependency>
@@ -106,6 +112,25 @@
 			<artifactId>postgresql</artifactId>
 			<version>${postgresql.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>${jjwt-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>${jjwt-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId> <!-- or gson -->
+			<version>${jjwt-version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
 
 	</dependencies>
 
