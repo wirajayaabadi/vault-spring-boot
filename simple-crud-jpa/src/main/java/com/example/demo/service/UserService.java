@@ -10,9 +10,11 @@ import java.util.List;
 
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.dto.UserDto;
+import com.example.demo.dto.UserRequest;
+import com.example.demo.dto.UserResponse;
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.mapper.UserMapper;
+import com.example.demo.mapper.UserRequestMapper;
+import com.example.demo.mapper.UserResponseMapper;
 
 @Service
 public class UserService {
@@ -20,26 +22,26 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public List<UserDto> getAllUsers() {
+    public List<UserResponse> getAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream()
-                    .map(UserMapper.INSTANCE::toDto)
+                    .map(UserResponseMapper.INSTANCE::toDto)
                     .collect(Collectors.toList());
     }
 
-    public UserDto getUserById(UUID id) {
+    public UserResponse getUserById(UUID id) {
         User user = userRepository.findById(id)
                                 .orElseThrow(() -> new ResourceNotFoundException(String.format("User not found with id: %s", id)));
-        return UserMapper.INSTANCE.toDto(user);
+        return UserResponseMapper.INSTANCE.toDto(user);
     }
 
-    public UserDto createUser(UserDto userDto) {
-        User user = UserMapper.INSTANCE.toEntity(userDto);
+    public UserResponse createUser(UserRequest userDto) {
+        User user = UserRequestMapper.INSTANCE.toEntity(userDto);
         User savedUser = userRepository.save(user);
-        return UserMapper.INSTANCE.toDto(savedUser);
+        return UserResponseMapper.INSTANCE.toDto(savedUser);
     }
 
-    public UserDto updateUser(UUID id, UserDto updatedUserDto) {
+    public UserResponse updateUser(UUID id, UserRequest updatedUserDto) {
         User existingUser = userRepository.findById(id)
                                         .orElseThrow(() -> new ResourceNotFoundException(String.format("User not found with id: %s", id)));
 
@@ -47,7 +49,7 @@ public class UserService {
         existingUser.setEmail(updatedUserDto.getEmail());
 
         User updatedUser = userRepository.save(existingUser);
-        return UserMapper.INSTANCE.toDto(updatedUser);
+        return UserResponseMapper.INSTANCE.toDto(updatedUser);
 
     }
 

@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.UserDto;
+import com.example.demo.dto.UserRequest;
+import com.example.demo.dto.UserResponse;
 import com.example.demo.service.UserService;
 
 @RestController
@@ -26,23 +27,23 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("")
-    public ResponseEntity<List<UserDto>> getAllUsers() {
+    public ResponseEntity<List<UserResponse>> getAllUsers() {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable UUID id) {
-        return new ResponseEntity<>((UserDto)userService.getUserById(id), HttpStatus.OK);
+    public ResponseEntity<UserResponse> getUserById(@PathVariable UUID id) {
+        return new ResponseEntity<>((UserResponse)userService.getUserById(id), HttpStatus.OK);
     }
 
     @PostMapping()
-    public ResponseEntity<UserDto> postMethodName(@RequestBody UserDto createUser) {
+    public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest createUser) {
         return new ResponseEntity<>(userService.createUser(createUser), HttpStatus.CREATED);
     }
     
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable UUID id, @RequestBody UserDto updatedUser) {
+    public ResponseEntity<UserResponse> updateUser(@PathVariable UUID id, @RequestBody UserRequest updatedUser) {
         return new ResponseEntity<>(userService.updateUser(id, updatedUser), HttpStatus.OK);
     }
     
