@@ -22,7 +22,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(nullable = false)
+    // @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
@@ -31,10 +31,10 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    // @Column(nullable = false)
     private String role;
 
-    @Column(nullable = false, unique = true)
+    // @Column(nullable = false, unique = true)
     private String email;
 
 
