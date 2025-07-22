@@ -45,13 +45,13 @@ public class UserService {
 
     // @Cacheable
     public UserResponse getUserByUsername(String username) {
-        User user = userRepository.findByUsername(username)
-        .orElseThrow(() -> new ResourceNotFoundException(String.format("User not found with username: %s", username)));
         User redisUser = redisTemplate.opsForValue().get(USER_KEY_PREFIX + username);
-        System.out.println("User found in Redis with value: " + redisUser);
         if (redisUser != null) {
             return UserResponseMapper.INSTANCE.toDto(redisUser);
         }
+
+        User user = userRepository.findByUsername(username)
+        .orElseThrow(() -> new ResourceNotFoundException(String.format("User not found with username: %s", username)));
         return UserResponseMapper.INSTANCE.toDto(user);
     }
 
