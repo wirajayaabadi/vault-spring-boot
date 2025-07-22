@@ -14,18 +14,9 @@ import lombok.NoArgsConstructor;
 public class UserResponse {
     
     private UUID id;
-
-    @NotBlank(message = "Name is required")
     private String name;
-    
-    @NotBlank(message = "Username is required")
     private String username;
-
-    @NotBlank(message = "Role is required")
-    private String role;
-    
-    @Email(message = "Invalid email format")
-    @NotBlank(message = "Email is required")
+    private String role;    
     private String email;
 
 }
