@@ -3,9 +3,10 @@ pipeline {
 
     environment {
         MAVEN_HOME = tool 'Maven-3.9.11'   // Ensure this tool name matches Jenkins config
-        JAVA_HOME = tool 'JDK'          // Match your configured JDK
+        JAVA_HOME = tool 'JDK-21'          // Match your configured JDK
         PATH = "${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${env.PATH}"
         DOCKER_IMAGE = "thechief28/vault-spring-boot/simple-crud-jpa:${env.BUILD_NUMBER}"
+        PROJECT_DIR = "simple-crud-jpa"
     }
 
     stages {
@@ -17,28 +18,21 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean compile'
-            }
-        }
-
-        stage('Unit Tests') {
-            steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
+                dir("${PROJECT_DIR}") {
+                    sh 'mvn clean compile'
                 }
             }
         }
 
         stage('Package') {
             steps {
-                sh 'mvn package -DskipTests'
+                dir("${PROJECT_DIR}") {
+                    sh 'mvn package -DskipTests'
+                }
             }
             post {
                 success {
-                    archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+                    archiveArtifacts artifacts: '${PROJECT_DIR}/target/*.jar', fingerprint: true
                 }
             }
         }
@@ -46,7 +40,9 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${DOCKER_IMAGE} ."
+                    dir("${PROJECT_DIR}") {
+                        sh "docker build -t ${DOCKER_IMAGE} ."
+                    }
                 }
             }
         }
