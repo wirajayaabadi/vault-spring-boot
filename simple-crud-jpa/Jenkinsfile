@@ -32,7 +32,7 @@ pipeline {
             }
             post {
                 success {
-                    archiveArtifacts artifacts: '${PROJECT_DIR}/target/*.jar', fingerprint: true
+                    archiveArtifacts artifacts: "${PROJECT_DIR}/target/*.jar", fingerprint: true
                 }
             }
         }
