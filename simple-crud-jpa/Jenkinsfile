@@ -8,6 +8,7 @@ pipeline {
         DOCKER_IMAGE = "thechief28/vault-spring-boot-simple-crud-jpa:${env.BUILD_NUMBER}"
         DOCKER_LATEST_IMAGE = "thechief28/vault-spring-boot-simple-crud-jpa:latest"
         PROJECT_DIR = "simple-crud-jpa"
+        ANSIBLE_DIR = "/home/jenkins/ansible"
         ANSIBLE_CONFIG = "/home/jenkins/ansible/ansible.cfg"
     }
 
@@ -61,14 +62,26 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy via Ansible') {
+            steps {
+                echo 'Deploying application on target server via Ansible...'
+                dir('ansible') {
+                    sh '''
+                        ansible-playbook -i ${ANSIBLE_DIR}/inventories/inventory.ini ${ANSIBLE_DIR}/playbooks/deploy-simple-crud-jpa.yml \
+                        --extra-vars "image=${DOCKER_LATEST_IMAGE}"
+                    '''
+                }
+            }
+        }
     }
 
     post {
         success {
-            echo 'Build and Docker image pushed successfully!'
+            echo 'Application deployed successfully! ✅'
         }
         failure {
-            echo 'Build failed. Please check the logs.'
+            echo 'Deployment failed. Please check the logs. ❌'
         }
     }
 }
