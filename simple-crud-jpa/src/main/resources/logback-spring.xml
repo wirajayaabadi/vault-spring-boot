@@ -21,7 +21,7 @@
 
     <!-- Logstash Appender -->
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>localhost:5000</destination>
+        <destination>host.docker.internal:5000</destination>
         
         <!-- Optional but recommended -->
         <keepAlive>true</keepAlive>

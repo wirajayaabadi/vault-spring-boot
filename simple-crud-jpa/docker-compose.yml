@@ -1,0 +1,8 @@
+services:
+  simple_crud_jpa:
+    image: thechief28/vault-spring-boot-simple-crud-jpa:latest
+    ports:
+      - "8080:8080"
+      - "5000:5000"
+      - "22:22"
+      - "5432:5432"
